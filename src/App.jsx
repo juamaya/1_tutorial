@@ -1,34 +1,79 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Team from './pages/Team';
-import Dashboard from './pages/Dashboard';
-import Projects from './pages/Projects';
-import Calendar from './pages/Calendar';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import Team from './pages/Team'
+import Dashboard from './pages/Dashboard'
+import Projects from './pages/Projects'
+import Calendar from './pages/Calendar'
 
+const pageTransition = {
+   initial: { opacity: 0, y: 20 },
+   animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+   exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
+}
 
-
-
-function App() {
-
+const AppContent = () => {
+   const location = useLocation()
 
    return (
-
-      <main className="bg-indigo-400 h-screen">
-         <Router>
-            <Navbar />
-            <Routes>
-               <Route path="/" element={<Home />} />
-               <Route path="/dashboard" element={<Dashboard />} />
-               <Route path="/team" element={<Team />} />
-               <Route path="/projects" element={<Projects />} />
-               <Route path="/calendar" element={<Calendar />} />
+      <>
+         <Navbar />
+         <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+               <Route
+                  path="/"
+                  element={
+                     <motion.div {...pageTransition}>
+                        <Home />
+                     </motion.div>
+                  }
+               />
+               <Route
+                  path="/dashboard"
+                  element={
+                     <motion.div {...pageTransition}>
+                        <Dashboard />
+                     </motion.div>
+                  }
+               />
+               <Route
+                  path="/team"
+                  element={
+                     <motion.div {...pageTransition}>
+                        <Team />
+                     </motion.div>
+                  }
+               />
+               <Route
+                  path="/projects"
+                  element={
+                     <motion.div {...pageTransition}>
+                        <Projects />
+                     </motion.div>
+                  }
+               />
+               <Route
+                  path="/calendar"
+                  element={
+                     <motion.div {...pageTransition}>
+                        <Calendar />
+                     </motion.div>
+                  }
+               />
             </Routes>
+         </AnimatePresence>
+      </>
+   )
+}
+
+function App() {
+   return (
+      <main className="bg-indigo-400 pt-16 min-h-screen overflow-x-hidden">
+         <Router>
+            <AppContent />
          </Router>
-       
       </main>
-
-
    )
 }
 
