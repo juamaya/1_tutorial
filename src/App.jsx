@@ -6,6 +6,8 @@ import Team from './pages/Team'
 import Dashboard from './pages/Dashboard'
 import Projects from './pages/Projects'
 import Calendar from './pages/Calendar'
+import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 
 const pageTransition = {
    initial: { opacity: 0, y: 20 },
@@ -18,6 +20,7 @@ const AppContent = () => {
 
    return (
       <>
+      <ScrollToTop />
          <Navbar />
          <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
@@ -72,6 +75,7 @@ function App() {
       <main className="bg-indigo-400 pt-16 min-h-screen overflow-x-hidden">
          <Router>
             <AppContent />
+              <Footer />
          </Router>
       </main>
    )
